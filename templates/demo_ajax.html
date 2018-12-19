@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>请输入两个数字</p>
+    <form action="/demo_add/" method="get">
+        a :
+        <select id="a">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <br>
+        <!--b : <input type="text" id="b" name="b"><br> -->
+        b:<select id="b" disabled="none"></select>
+        <p>result : <span id="result"></span></p>
+        <button type="button" id="sum">提交</button>
+    </form>
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+<script>
+
+    $(document).ready(function(){
+
+        $("#a").change(function () {
+            var a = $("#a").val()
+            $.get("/get_number", {'a':a}, function (ret) {
+                $("#b").html(ret).css('display', 'block').removeAttr('disabled')
+            })
+        });
+
+        $("#sum").click(function(){
+            var a = $("#a").val();
+            var b = $("#b").val();
+            $.get("/demo_add", {'a':a, 'b':b}, function(ret){
+                $('#result').html(ret).css('color', 'red')
+            })
+        });
+
+    })
+</script>
+</body>
+</html>

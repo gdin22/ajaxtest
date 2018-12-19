@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cloud</title>
+</head>
+<body>
+    <div style="float:left;">
+        <form action="/get_cloud/" method="post" style="margin: auto 0;">
+            请输入asin:<br>
+            <input type="text" id="search-text" name="q"><button type="button" id="'search-button">搜索</button>
+            <p><span id="search-result" style="background-color: aliceblue; border: red"></span></p>
+        </form>
+    </div>
+    <div style="float:left;">选择尺码<select id="size"></select></div>
+    <div style="float:left;">选择颜色<select id="color"></select></div>
+    <div style="float:left;">选择星级<select id="star"></select></div>
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#search-text").keyup(function () {
+            var q = $("#search-text").val();
+            $.post('/get_cloud/', {'q':q}, function (data) {
+                for(var i = data.length-1; i >= 0; i--){
+                    if (data[i] != '0'){
+                        $("#search-result").append(data[i] + '<br/>')}
+                }
+            });
+        });
+
+        $("#size").change(function () {
+            var asin = $("#search-text").val()
+            var size = $("#size").val()
+            $.get("/get_number", {'size':asin, 'size':size}, function (ret) {
+                $("#size").html(ret).css('display', 'block').removeAttr('disabled')
+            })
+        });
+
+
+       $('#search-text').keydown(function () {
+            $("#search-result").empty();
+        });
+        /*
+        $("#search-text").blur(function () {
+            $("#search-result").empty();
+        });*/
+    });
+</script>
+</body>
+</html>
