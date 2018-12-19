@@ -17,6 +17,10 @@
     <div style="float:left;">选择星级<select id="star"></select></div>
 <script src="/static/js/jquery-3.3.1.min.js"></script>
 <script>
+    // 首先输入寻找asin
+    // 然后出现不同的color， size 和 color 进行选择
+    // 也可以直接进行提交 如果没有选择星级 则是会给出两张云图 五星和一星的
+    // 在
     $(document).ready(function () {
         $("#search-text").keyup(function () {
             var q = $("#search-text").val();
