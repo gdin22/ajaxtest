@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from ajax import views
+from django.views.static import serve
 
 urlpatterns = [
     url('admin/', admin.site.urls),
@@ -26,4 +27,5 @@ urlpatterns = [
     url(r'^get_number$', views.get_number),
     url(r'^get_cloud/$', views.get_cloud),
     url(r'^make_image/$', views.make_image),
+    url(r'^index/static/(?P<path>.*)$', serve, {'document_root': r'C:\Users\Administrator\Desktop\ajaxtest\static'}),
 ]

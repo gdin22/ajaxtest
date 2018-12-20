@@ -126,4 +126,10 @@ def make_image(request):
         print(searchDict)
         make = makeWordCloud()
         make.getcloud(searchDict)
-        return render(request, 'demo_ajax.html')
+
+        color = searchDict.get('color', 'call')
+        size = searchDict.get('size', 'siall')
+        star = searchDict.get('star', 'stall')
+        href = '%s_%s_%s_%s.png' % (masin, color, size, star)
+        r = HttpResponse(href)
+        return r

@@ -3,20 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>cloud</title>
+    <link rel="stylesheet" href="/static/css/content.css">
 </head>
-<body>
+<body >
+<div>
     <div style="float:left;">
         <form action="/get_cloud/" method="post" style="margin: auto 0;">
-            请输入asin:<br>
+            请输入asin:
             <input type="text" id="search-text" name="q"><!--<button type="button" id="'search-button">搜索</button>-->
             <p><span id="search-result" style="background-color: aliceblue; border: red"></span></p>
         </form>
     </div>
-    <div style="float:left;">选择尺码<select id="size"></select></div>
-    <div style="float:left;">选择颜色<select id="color"></select></div>
-    <div style="float:left;">选择星级<select id="star"></select></div>
+    <div style="float:left;">选择尺码<select id="size" DISABLED><option value="all">  选择全部 </option></select></div>
+    <div style="float:left;">选择颜色<select id="color" DISABLED><option value="all">  选择全部 </option></select></div>
+    <div style="float:left;">选择星级<select id="star" DISABLED><option value="all">  选择全部 </option></select></div>
     <div><button type="button" id="search-button">搜索</button> </div>
-<script src="/static/js/jquery-3.3.1.min.js"></script>
+</div>
+<div id="content">
+    <ul>
+        <!--
+        <li>
+            <a href="../index/static/background.jpg" target="_blank"><img src="../index/static/background.jpg"></a>
+            <div class="tit"><p>dress</p></div>
+        </li>
+        -->
+    </ul>
+</div>
+<!--<script src="/static/js/jquery-3.3.1.min.js"></script>-->
+<script src="/static/js/jquery-3.3.1.js"></script>
 <script>
     // 首先输入寻找asin
     // 然后出现不同的color， size 和 color 进行选择
@@ -31,9 +45,9 @@
                             $("#search-result").append(data[i] + '<br/>')}
                     }
                 }else {
-                    $("#color").html(data[1] + '<option value="all">  选择全部 </option>');
-                    $("#size").html(data[2] + '<option value="all">  选择全部 </option>');
-                    $("#star").html(data[3] + '<option value="all">  选择全部 </option>');
+                    $("#color").html(data[1] + '<option value="all">  选择全部 </option>').removeAttr('disabled');
+                    $("#size").html(data[2] + '<option value="all">  选择全部 </option>').removeAttr('disabled');
+                    $("#star").html(data[3] + '<option value="all">  选择全部 </option>').removeAttr('disabled');
                 }
             });
         });
@@ -44,7 +58,11 @@
            var color = $("#color").val();
            var star = $("#star").val();
            $.post('/make_image/', {'asin': asin , 'size': size , 'color': color, 'star': star},function (data) {
-               
+                var $li = '        <li>\n' +
+                    '            <a href="../index/static/'+ data +'" target="_blank" ><img src="../index/static/'+data+'"></a>\n' +
+                    '            <div class="tit" style="bottom: -50px;"><p>dress</p></div>\n' +
+                    '        </li>';
+               $('ul').append($li);
            })
         });
 
@@ -55,7 +73,28 @@
         $("#search-text").blur(function () {
             $("#search-result").empty();
         });*/
+        $("#content ul li ").hover(function () {
+            $(this).find("div").stop().animate({
+                "bottom":"0px"
+            }, 1000);
+        }, function () {
+            $(this).find("div").stop().animate({
+                "bottom":"-50px"
+            }, 1000);
+        });
     });
+
+        $("#content ul ").on('hover', 'li', function () {
+            $(this).find("div").stop().animate({
+                "bottom":"0px"
+            }, 1000);
+        }, function () {
+            $(this).find("div").stop().animate({
+                "bottom":"-50px"
+            }, 1000);
+        });
+
+
 </script>
 </body>
 </html>
