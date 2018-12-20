@@ -24,5 +24,6 @@ urlpatterns = [
     url('^demo_add$', views.demo_add),
     url("^demo_ajax$", views.demo_ajax),
     url(r'^get_number$', views.get_number),
-    url(r'^get_cloud/$', views.get_cloud)
+    url(r'^get_cloud/$', views.get_cloud),
+    url(r'^make_image/$', views.make_image),
 ]
